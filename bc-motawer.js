@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var prefix = "$"
+var prefix = "-"
 
 
 
@@ -12,8 +12,18 @@ client.on("message", message => {
   let args = message.content.split(" ").slice(1);
   var argresult = args.join(' ');
   message.guild.members.filter(m => m.presence.status !== 'all').forEach(m => {
-  m.send(`${argresult}\n ${m}`);
-  })
+      var bc = new Discord.RichEmbed() 
+          .setColor('RANDOM') .setTitle('Broadcast') 
+          .addField('Server', message.guild.name) 
+          .addField('Sender', message.author.username) 
+          .addField('Message', args.replace('[user]','<@'+ m.id+'>').replace('[server]', message.guild.name)) 
+          .setThumbnail(message.author.avatarURL) 
+	      .setFooter(copy, client.user.avatarURL);
+          m.send({ embed: bc })
+	msg.delete(); 
+        })
+      })
+  
   message.channel.send(`\`${message.guild.members.filter( m => m.presence.status !== 'all').size}\`:mailbox:  عدد المستلمين `);
   message.delete();
   };
@@ -32,8 +42,18 @@ client.on("message", message => {
     let args = message.content.split(" ").slice(1);
     var argresult = args.join(' '); 
     message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
-   m.send(`${argresult}\n ${m}`);
-  })
+        var bc = new Discord.RichEmbed() 
+          .setColor('RANDOM') .setTitle('Broadcast') 
+          .addField('Server', message.guild.name) 
+          .addField('Sender', message.author.username) 
+          .addField('Message', args.replace('[user]','<@'+ m.id+'>').replace('[server]', message.guild.name)) 
+          .setThumbnail(message.author.avatarURL) 
+	      .setFooter(copy, client.user.avatarURL);
+          m.send({ embed: bc })
+	msg.delete(); 
+        })
+      })
+      
    message.channel.send(`\`${message.guild.members.filter(m => m.presence.status !== 'online').size}\` :mailbox:  عدد المستلمين `); 
    message.delete(); 
   };     
